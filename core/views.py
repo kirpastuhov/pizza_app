@@ -43,7 +43,7 @@ class CheckoutView(View):
                 context.update({'default_shipping_address': shipping_address_qs[0]})
             return render(self.request, "checkout-page.html", context)
         except ObjectDoesNotExist:
-            messages.info(self.request, "You do not have an active order")
+            messages.warning(self.request, "You do not have an active order")
             return redirect("core:checkout")
 
     def post(self, *args, **kwargs):
@@ -51,10 +51,8 @@ class CheckoutView(View):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             if form.is_valid():
-
                 use_default_shipping = form.cleaned_data.get('use_default_shipping')
                 if use_default_shipping:
-                    print("Using the default shipping address")
                     address_qs = Address.objects.filter(
                         user=self.request.user,
                         default=True
@@ -67,7 +65,6 @@ class CheckoutView(View):
                         messages.info(self.request, "No default shipping address")
                         return redirect("core:checkout")
                 else:
-                    print("Entering new address")
                     shipping_address1 = form.cleaned_data.get('shipping_address1')
                     shipping_address2 = form.cleaned_data.get('shipping_address2')
                     country = form.cleaned_data.get('country')
