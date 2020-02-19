@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <main>
+        <div class="container-fluid">
+            <!-- Card -->
+            <section class="text-center mb-4 ">
+                {% if orders %}
+                    <div class="row wow fadeIn mt-5 mh-100">
+                        {% for order in orders %}
+                            <div class="col-lg-12 col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <a href="" class="grey-text">
+                                            <h5>{{ item.get_category_display }}</h5>
+                                        </a>
+                                        <h4 class="card-title">Order {{ forloop.counter }}</h4>
+                                        {% for item in order.items.all %}
+                                            {{ item }} <br>
+                                        {% endfor %}
+                                        <h4 class="font-weight-bold blue-text">
+                                            <strong>Order Amount $ {{ order.payment.amount }}</strong>
+                                        </h4>
+                                        <h5 class="default-text">
+                                            {{ order.ordered_date }}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    <div class="container text-center">
+                        <p> You do not have any orders yet</p>
+                    </div>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                {% endif %}
+            </section>
+        </div>
+    </main>
+
+{% endblock content %}

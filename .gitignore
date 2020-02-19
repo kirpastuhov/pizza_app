@@ -7,3 +7,4 @@ static_root
 *.sqlite3
 *.env
 .vscode
+.idea
